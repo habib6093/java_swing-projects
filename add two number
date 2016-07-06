@@ -1,0 +1,61 @@
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
+import javax.swing.JTextField;
+
+
+
+public class Hello
+{
+	public static void main(String arc[])
+	{
+		 box ob=new box();
+		 ob.setVisible(true);
+		 ob.setSize(500,500);
+		 ob.shown();
+         
+
+	}
+}
+
+class box extends JFrame
+{
+   public box() 
+   {  
+   }
+   JTextField a1=new JTextField(10);
+       
+       JTextField a2=new JTextField(10);
+        JLabel l1=new JLabel("ADD two Number");
+       JButton b1=new JButton("ADD");
+   public void shown()
+   {    setLayout(new FlowLayout());
+      
+       add(l1);
+       
+       add(a1);
+       add(a2);
+       add(b1);
+       JLabel s=new JLabel(a1.getText());
+       add(s);
+      
+       b1.addActionListener(new ActionListener(){
+       	public void actionPerformed(ActionEvent ae)
+       	{
+       		int sd=Integer.parseInt(a1.getText());
+       		int sf=Integer.parseInt(a2.getText());
+
+       		int m=sd+sf;
+       		JLabel ms=new JLabel(m+"");
+       		add(ms);setVisible(true);
+       	}
+       	
+
+       });
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   }
+   
+}
