@@ -30,7 +30,7 @@ class box extends JFrame
        
        JTextField a2=new JTextField(10);
         JLabel l1=new JLabel("ADD two Number");
-       JButton b1=new JButton("ADD");
+       JButton b1=new JButton("ADD"); JLabel ms=new JLabel();
    public void shown()
    {    setLayout(new FlowLayout());
       
@@ -49,7 +49,7 @@ class box extends JFrame
        		int sf=Integer.parseInt(a2.getText());
 
        		int m=sd+sf;
-       		JLabel ms=new JLabel(m+"");
+       		ms.setText(m+"");
        		add(ms);setVisible(true);
        	}
        	
