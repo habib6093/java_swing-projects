@@ -1,0 +1,176 @@
+import javafx.application.Application;
+import javafx.event.*;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import java.io.File;//for css //
+import javafx.geometry.Pos; //for positioning//
+import javafx.scene.control.*;
+import javafx.scene.text.*;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+import java.sql.*;
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
+public class login extends Application
+{
+	public static void main(String arg[])
+	{
+		launch(arg);
+	}
+
+    
+
+    public void start(Stage stage_ob)
+    {
+
+          StackPane stackPane_ob=new StackPane();
+          stackPane_ob.setAlignment(Pos.CENTER);
+
+          Scene scene_ob=new Scene(stackPane_ob,1280,620);
+          
+           
+           //..connect css file//
+      	File f = new File("app.css");
+       
+        stackPane_ob.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+
+        Text t=new Text("Wellcome to JourneyBy");
+        PasswordField password = new PasswordField();
+        TextField text=new TextField();
+        Button login=new Button("Login");
+        Button cancel=new Button("Cancel");
+   
+        text.setMaxSize(200,30);
+        text.setPromptText("Enter ID");
+
+        password.setMaxSize(200,30);
+        password.setPromptText("Enter password");
+
+        stackPane_ob.getChildren().add(t);
+        stackPane_ob.getChildren().add(text);
+        stackPane_ob.getChildren().add(password);
+        stackPane_ob.getChildren().add(login);
+        stackPane_ob.getChildren().add(cancel);
+
+        login.setTranslateX(-30);
+        login.setTranslateY(130);
+
+        cancel.setTranslateX(60);
+        cancel.setTranslateY(130);
+        
+        text.setTranslateX(10);
+        text.setTranslateY(30);
+
+      	password.setTranslateX(10);
+        password.setTranslateY(75);
+
+        t.setTranslateX(10);
+        t.setTranslateY(-50);
+
+
+        //set css ID....//
+
+        t.setId("log_label");
+        stackPane_ob.setId("login");
+
+
+
+      //database connection....
+          
+
+
+
+        login.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	
+           
+           if(!text.getText().equals("")&&!password.getText().equals(""))
+           {
+           	   int x=data.databass(text.getText(),password.getText());
+           	   if(x!=0)
+           	   {
+           	   	  if(x==1)//1 owner
+           	   	  {
+           	   	  	System.out.println("owner");
+           	   	  }
+           	   	  else if(x==2)
+           	   	  {
+           	   	  	System.out.println("super admin");
+           	   	  }
+           	   	  else if(x==3)
+           	   	  {
+           	   	  	System.out.println("admin");
+           	   	  }
+
+           	   }
+           	   else
+           	   {//System.out.println(text.getText()+""+password.getText());
+           	   	System.out.println("you are such an asshole....");
+           	   		System.out.println(text.getText()+"");
+           	   	System.out.println(password.getText()+"");
+           	   }
+           }
+
+           else
+           {
+           	System.out.println("password or user_name is empty...");
+           }
+
+
+            }
+        });
+        
+
+
+
+
+           stage_ob.setResizable(false);
+           stage_ob.setScene(scene_ob);
+           stage_ob.show();
+    }
+
+
+    //end of login class//// 
+}
+
+
+class data
+{
+	public static int databass(String a,String b)
+	{   int x=0;
+	    try{String JDBC_DRIVER="com.mysql.jdbc.Driver";
+        String host="jdbc:mysql://localhost:3306/temp";
+        String user_name="root";
+        String pass="";
+        Connection con=DriverManager.getConnection(host,user_name,pass);
+
+         Statement stmt=null;
+         ResultSet rs;
+         stmt = con.createStatement();
+         rs=stmt.executeQuery("select * from login");
+
+      while(rs.next())
+      {
+        String n=rs.getString("name");
+        String i=rs.getString("password");
+
+        if(a.equals(n)&&b.equals(i))
+        	{x=rs.getInt("id");
+        		break;}
+        System.out.println("name is: "+n);
+        System.out.println("password is: "+i);
+      }
+  }catch(Exception ex){}
+
+    return x;
+    }
+}
