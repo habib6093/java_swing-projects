@@ -11,12 +11,6 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
 
 
 public class login extends Application
@@ -101,12 +95,13 @@ public class login extends Application
            	   	  if(x==1)//1 owner
            	   	  {
            	   	  	System.out.println("owner");
+           	   	  	
            	   	  }
-           	   	  else if(x==2)
+           	   	  else if(x==2)//2 super admin..
            	   	  {
            	   	  	System.out.println("super admin");
            	   	  }
-           	   	  else if(x==3)
+           	   	  else if(x==3)//3 admin...
            	   	  {
            	   	  	System.out.println("admin");
            	   	  }
@@ -115,8 +110,8 @@ public class login extends Application
            	   else
            	   {//System.out.println(text.getText()+""+password.getText());
            	   	System.out.println("you are such an asshole....");
-           	   		System.out.println(text.getText()+"");
-           	   	System.out.println(password.getText()+"");
+           	   		//System.out.println(text.getText()+"");
+           	   //	System.out.println(password.getText()+"");
            	   }
            }
 
@@ -166,8 +161,7 @@ class data
         if(a.equals(n)&&b.equals(i))
         	{x=rs.getInt("id");
         		break;}
-        System.out.println("name is: "+n);
-        System.out.println("password is: "+i);
+      
       }
   }catch(Exception ex){}
 
