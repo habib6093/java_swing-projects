@@ -38,18 +38,18 @@ public class login extends Application
 
         Text t=new Text("Wellcome to JourneyBy");
         PasswordField password = new PasswordField();
-        TextField text=new TextField();
+        TextField id=new TextField();
         Button login=new Button("Login");
         Button cancel=new Button("Cancel");
    
-        text.setMaxSize(200,30);
-        text.setPromptText("Enter ID");
+        id.setMaxSize(200,30);
+        id.setPromptText("Enter ID");
 
         password.setMaxSize(200,30);
         password.setPromptText("Enter password");
 
         stackPane_ob.getChildren().add(t);
-        stackPane_ob.getChildren().add(text);
+        stackPane_ob.getChildren().add(id);
         stackPane_ob.getChildren().add(password);
         stackPane_ob.getChildren().add(login);
         stackPane_ob.getChildren().add(cancel);
@@ -60,8 +60,8 @@ public class login extends Application
         cancel.setTranslateX(60);
         cancel.setTranslateY(130);
         
-        text.setTranslateX(10);
-        text.setTranslateY(30);
+    id.setTranslateX(10);
+        id.setTranslateY(30);
 
       	password.setTranslateX(10);
         password.setTranslateY(75);
@@ -87,14 +87,18 @@ public class login extends Application
             public void handle(ActionEvent event) {
             	
            
-           if(!text.getText().equals("")&&!password.getText().equals(""))
+           if(!id.getText().equals("")&&!password.getText().equals(""))
            {
-           	   int x=data.databass(text.getText(),password.getText());
+           	   int x=data.databass(id.getText(),password.getText());
            	   if(x!=0)
-           	   {
+           	   {  
+
            	   	  if(x==1)//1 owner
            	   	  {
+
            	   	  	System.out.println("owner");
+                    owner obs=new owner();
+                    obs.starts(stage_ob);
            	   	  	
            	   	  }
            	   	  else if(x==2)//2 super admin..
@@ -109,7 +113,7 @@ public class login extends Application
            	   }
            	   else
            	   {//System.out.println(text.getText()+""+password.getText());
-           	   	System.out.println("you are such an asshole....");
+           	   	System.out.println("wrong password or id....");
            	   		//System.out.println(text.getText()+"");
            	   //	System.out.println(password.getText()+"");
            	   }
@@ -140,7 +144,7 @@ public class login extends Application
 
 class data
 {
-	public static int databass(String a,String b)
+	public static int databass(String id,String password)
 	{   int x=0;
 	    try{String JDBC_DRIVER="com.mysql.jdbc.Driver";
         String host="jdbc:mysql://localhost:3306/temp";
@@ -152,19 +156,31 @@ class data
          ResultSet rs;
          stmt = con.createStatement();
          rs=stmt.executeQuery("select * from login");
+       System.out.println("user Pressed:"+id);
+       System.out.println("user Pressed:"+password);
 
       while(rs.next())
       {
-        String n=rs.getString("name");
-        String i=rs.getString("password");
 
-        if(a.equals(n)&&b.equals(i))
-        	{x=rs.getInt("id");
+        String ids=rs.getString("id");
+        String passwords=rs.getString("password");
+        System.out.println("databass has..:"+ids);
+        System.out.println("databass has..:"+passwords);
+
+        if(id.equals(ids)&&password.equals(passwords))
+        	{ int mm=34;
+            char c=(char)mm;
+            x=rs.getInt("position");
+            
+            stmt.executeUpdate("insert into login_log values("+c+ids+c+",CURRENT_TIMESTAMP)");
+            
         		break;}
       
       }
-  }catch(Exception ex){}
 
+  }catch(Exception ex){}
+    
+    
     return x;
     }
 }
